@@ -9,7 +9,7 @@
 # Note: please keep the aliases consistent throughout the project.
 #       For details, review the import statements in zid_project2_main.py
 
-print('test zqy')
+print('test new')
 
 
 
@@ -187,6 +187,7 @@ def daily_return_cal(prc):
 
     """
     # <COMPLETE THIS PART>
+    #danwu
 
 
 # ----------------------------------------------------------------------------
