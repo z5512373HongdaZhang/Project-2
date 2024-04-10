@@ -110,6 +110,7 @@ def read_prc_csv(tic, start, end, prc_col='Adj Close'):
     # 根据prc_col参数筛选价格数据
     close_series = df_filtered[prc_col].dropna()
     close_series.name = tic
+    # 到底是什么问题啊
 
     return close_series
 
@@ -522,7 +523,7 @@ def _test_aj_ret_dict(tickers, start, end):
 if __name__ == "__main__":
     # pass
     # #test read_prc_csv function
-    # _test_read_prc_csv()
+     _test_read_prc_csv()
 
     # # use made-up series to test daily_return_cal function
     # _test_daily_return_cal()
