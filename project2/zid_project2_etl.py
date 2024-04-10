@@ -315,7 +315,6 @@ def monthly_return_cal(prc):
 
     monthly_returns.index.name = 'Year_Month'
     monthly_returns.name = prc.name
-
     return monthly_returns
 
 
