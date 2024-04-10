@@ -9,9 +9,10 @@
 # Note: please keep the aliases consistent throughout the project.
 #       For details, review the import statements in zid_project2_main.py
 
-print('test new')
-
-
+import util
+import pandas as pd
+import config as cfg
+import os
 
 # ----------------------------------------------------------------------------
 # Part 4.2: Complete the read_prc_csv function
@@ -98,7 +99,22 @@ def read_prc_csv(tic, start, end, prc_col='Adj Close'):
 
     """
 
-    # <COMPLETE THIS PART>
+    tic = tic.lower()
+    filepath = os.path.join(cfg.DATADIR, f'{tic}_prc.csv')
+    # 读取CSV文件
+    df = pd.read_csv(filepath, parse_dates=['Date'])
+    # 根据开始日期和结束日期筛选数据
+    df.set_index('Date', inplace=True)
+    df.sort_index(inplace=True)
+    df_filtered = df.loc[start:end]
+    # 根据prc_col参数筛选价格数据
+    if prc_col == 'Adj Close':
+        close_series = df_filtered['Adj Close']
+    else:
+        close_series = df_filtered['Close']
+    close_series = close_series.dropna()
+    close_series.name = tic
+    return close_series
 
 
 # ----------------------------------------------------------------------------
@@ -479,9 +495,9 @@ def _test_aj_ret_dict(tickers, start, end):
 
 
 if __name__ == "__main__":
-    pass
+    # pass
     # #test read_prc_csv function
-    # _test_read_prc_csv()
+     _test_read_prc_csv()
 
     # # use made-up series to test daily_return_cal function
     # _test_daily_return_cal()
