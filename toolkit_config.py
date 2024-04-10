@@ -3,5 +3,5 @@ Project configuration file
 """
 import os
 
-PRJDIR = r'C:\Users\98111\toolkit'
+PRJDIR = r'/Users/sam/PycharmProjects/Project-2'
 DATADIR = os.path.join(PRJDIR, 'data')

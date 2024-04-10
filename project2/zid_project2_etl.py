@@ -523,10 +523,10 @@ def _test_aj_ret_dict(tickers, start, end):
 if __name__ == "__main__":
     # pass
     # #test read_prc_csv function
-     _test_read_prc_csv()
+     #_test_read_prc_csv()
 
     # # use made-up series to test daily_return_cal function
-    # _test_daily_return_cal()
+    _test_daily_return_cal()
     # # use AAPL prc series to test daily_return_cal function
     #  ser_price = read_prc_csv(tic='AAPL', start='2020-09-03', end='2020-09-09')
     #  _test_daily_return_cal(made_up_data=False, ser_prc=ser_price)
