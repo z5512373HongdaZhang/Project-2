@@ -170,7 +170,6 @@ def get_avg(df: pd.DataFrame, year):
 
     """
     # <COMPLETE THIS PART>
-1
 
 def get_cumulative_ret(df):
     """ Returns cumulative returns for input DataFrame.
@@ -245,7 +244,8 @@ def get_cumulative_ret(df):
 #     ticker for this stock.
 #     Use the output dictionary, DM_Ret_dict, and auxiliary function in this script
 #     to do the calculation.
-Q1_ANSWER = '?'
+import pandas as pd
+
 
 
 # Q2: What is the daily average return of the stock in question 1 for the year 2008.
