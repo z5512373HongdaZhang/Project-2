@@ -9,9 +9,10 @@
 # Note: please keep the aliases consistent throughout the project.
 #       For details, review the import statements in zid_project2_main.py
 
-print('test new')
-
-
+import util
+import pandas as pd
+import config as cfg
+import os
 
 # ----------------------------------------------------------------------------
 # Part 4.2: Complete the read_prc_csv function
@@ -98,7 +99,20 @@ def read_prc_csv(tic, start, end, prc_col='Adj Close'):
 
     """
 
-    # <COMPLETE THIS PART>
+    tic = tic.lower()
+    filepath = os.path.join(cfg.DATADIR, f'{tic}_prc.csv')
+    # 读取CSV文件
+    df = pd.read_csv(filepath, parse_dates=['Date'])
+    # 根据开始日期和结束日期筛选数据
+    df.set_index('Date', inplace=True)
+    df.sort_index(inplace=True)
+    df_filtered = df.loc[start:end]
+    # 根据prc_col参数筛选价格数据
+    close_series = df_filtered[prc_col].dropna()
+    close_series.name = tic
+    # 到底是什么问题啊
+
+    return close_series
 
 
 # ----------------------------------------------------------------------------
@@ -186,7 +200,9 @@ def daily_return_cal(prc):
      - Ensure that the returns do not contain any entries with null values.
 
     """
-    # <COMPLETE THIS PART>
+    daily_returns = prc.pct_change().dropna()
+
+    return daily_returns
     #danwu
 
 
@@ -290,7 +306,17 @@ def monthly_return_cal(prc):
      - Ensure that the returns do not contain any entries with null values.
 
     """
-    # <COMPLETE THIS PART>
+    # 将每日数据转换为月度数据，并计算月度回报
+    monthly_returns = prc.resample('ME').last().pct_change()
+    #排除那些数据条目数少于18个月的月份
+    # 首先，我们需要一个按月分组后的计数
+    count_per_month = prc.resample('ME').count()
+    # 然后，我们保留那些计数大于或等于18的月份
+    monthly_returns = monthly_returns[count_per_month >= 18]
+
+    monthly_returns.index.name = 'Year_Month'
+    monthly_returns.name = prc.name
+    return monthly_returns
 
 
 # ----------------------------------------------------------------------------
@@ -403,7 +429,23 @@ def aj_ret_dict(tickers, start, end):
         memory usage: 24.0 bytes
         ----------------------------------------
     """
-    # <COMPLETE THIS PART>
+    daily_returns = {}
+    monthly_returns = {}
+
+    for tic in tickers:
+
+        prc = read_prc_csv(tic, start, end)
+
+        # 计算 daily and monthly returns
+        daily_returns[tic.lower()] = daily_return_cal(prc)
+        monthly_returns[tic.lower()] = monthly_return_cal(prc)
+
+    # Convert dictionaries to dataframes
+    daily_return_df = pd.DataFrame(daily_returns)
+    monthly_return_df = pd.DataFrame(monthly_returns)
+
+    # Return as a dictionary
+    return {"Daily": daily_return_df, "Monthly": monthly_return_df}
 
 
 # ----------------------------------------------------------------------------
@@ -479,21 +521,20 @@ def _test_aj_ret_dict(tickers, start, end):
 
 
 if __name__ == "__main__":
-    pass
+    # pass
     # #test read_prc_csv function
-    # _test_read_prc_csv()
+     #_test_read_prc_csv()
 
     # # use made-up series to test daily_return_cal function
-    # _test_daily_return_cal()
+    _test_daily_return_cal()
     # # use AAPL prc series to test daily_return_cal function
-    # ser_price = read_prc_csv(tic='AAPL', start='2020-09-03', end='2020-09-09')
-    # _test_daily_return_cal(made_up_data=False, ser_prc=ser_price)
+    #  ser_price = read_prc_csv(tic='AAPL', start='2020-09-03', end='2020-09-09')
+    #  _test_daily_return_cal(made_up_data=False, ser_prc=ser_price)
     #
     # # use made-up series to test daily_return_cal function
     # _test_monthly_return_cal()
     # # use AAPL prc series to test daily_return_cal function
-    # ser_price = read_prc_csv(tic='AAPL', start='2020-08-31', end='2021-01-10')
     # _test_monthly_return_cal(made_up_data=False, ser_prc=ser_price)
-    # # test aj_ret_dict function
+    # test aj_ret_dict function
     # _test_aj_ret_dict(['AAPL', 'TSLA'], start='2010-06-25', end='2010-08-05')
 
