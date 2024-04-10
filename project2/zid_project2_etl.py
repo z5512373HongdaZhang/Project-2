@@ -305,7 +305,18 @@ def monthly_return_cal(prc):
      - Ensure that the returns do not contain any entries with null values.
 
     """
-    # <COMPLETE THIS PART>
+    # 将每日数据转换为月度数据，并计算月度回报
+    monthly_returns = prc.resample('ME').last().pct_change()
+    #排除那些数据条目数少于18个月的月份
+    # 首先，我们需要一个按月分组后的计数
+    count_per_month = prc.resample('ME').count()
+    # 然后，我们保留那些计数大于或等于18的月份
+    monthly_returns = monthly_returns[count_per_month >= 18]
+
+    monthly_returns.index.name = 'Year_Month'
+    monthly_returns.name = prc.name
+
+    return monthly_returns
 
 
 # ----------------------------------------------------------------------------
@@ -501,14 +512,14 @@ if __name__ == "__main__":
     # # use made-up series to test daily_return_cal function
     # _test_daily_return_cal()
     # # use AAPL prc series to test daily_return_cal function
-    # ser_price = read_prc_csv(tic='AAPL', start='2020-09-03', end='2020-09-09')
-    # _test_daily_return_cal(made_up_data=False, ser_prc=ser_price)
+    #  ser_price = read_prc_csv(tic='AAPL', start='2020-09-03', end='2020-09-09')
+    #  _test_daily_return_cal(made_up_data=False, ser_prc=ser_price)
     #
     # # use made-up series to test daily_return_cal function
     # _test_monthly_return_cal()
     # # use AAPL prc series to test daily_return_cal function
-    # ser_price = read_prc_csv(tic='AAPL', start='2020-08-31', end='2021-01-10')
-    # _test_monthly_return_cal(made_up_data=False, ser_prc=ser_price)
+    ser_price = read_prc_csv(tic='AAPL', start='2020-08-31', end='2021-01-10')
+    _test_monthly_return_cal(made_up_data=False, ser_prc=ser_price)
     # # test aj_ret_dict function
     # _test_aj_ret_dict(['AAPL', 'TSLA'], start='2010-06-25', end='2010-08-05')
 
