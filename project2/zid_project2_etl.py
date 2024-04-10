@@ -108,10 +108,7 @@ def read_prc_csv(tic, start, end, prc_col='Adj Close'):
     df.sort_index(inplace=True)
     df_filtered = df.loc[start:end]
     # 根据prc_col参数筛选价格数据
-    if prc_col == 'Adj Close':
-        close_series = df_filtered['Adj Close']
-    else:
-        close_series = df_filtered['Close']
+    close_series = df_filtered[prc_col]
     close_series = close_series.dropna()
     close_series.name = tic
 
