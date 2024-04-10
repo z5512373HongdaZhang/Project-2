@@ -108,8 +108,7 @@ def read_prc_csv(tic, start, end, prc_col='Adj Close'):
     df.sort_index(inplace=True)
     df_filtered = df.loc[start:end]
     # 根据prc_col参数筛选价格数据
-    close_series = df_filtered[prc_col]
-    close_series = close_series.dropna()
+    close_series = df_filtered[prc_col].dropna()
     close_series.name = tic
 
     return close_series
@@ -200,7 +199,9 @@ def daily_return_cal(prc):
      - Ensure that the returns do not contain any entries with null values.
 
     """
-    # <COMPLETE THIS PART>
+    daily_returns = prc.pct_change().dropna()
+
+    return daily_returns
     #danwu
 
 
@@ -495,7 +496,7 @@ def _test_aj_ret_dict(tickers, start, end):
 if __name__ == "__main__":
     # pass
     # #test read_prc_csv function
-     _test_read_prc_csv()
+    # _test_read_prc_csv()
 
     # # use made-up series to test daily_return_cal function
     # _test_daily_return_cal()
