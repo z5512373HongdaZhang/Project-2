@@ -114,6 +114,7 @@ def read_prc_csv(tic, start, end, prc_col='Adj Close'):
         close_series = df_filtered['Close']
     close_series = close_series.dropna()
     close_series.name = tic
+
     return close_series
 
 
