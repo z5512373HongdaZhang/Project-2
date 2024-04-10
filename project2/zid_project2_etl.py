@@ -428,7 +428,23 @@ def aj_ret_dict(tickers, start, end):
         memory usage: 24.0 bytes
         ----------------------------------------
     """
-    # <COMPLETE THIS PART>
+    daily_returns = {}
+    monthly_returns = {}
+
+    for tic in tickers:
+
+        prc = read_prc_csv(tic, start, end)
+
+        # 计算 daily and monthly returns
+        daily_returns[tic.lower()] = daily_return_cal(prc)
+        monthly_returns[tic.lower()] = monthly_return_cal(prc)
+
+    # Convert dictionaries to dataframes
+    daily_return_df = pd.DataFrame(daily_returns)
+    monthly_return_df = pd.DataFrame(monthly_returns)
+
+    # Return as a dictionary
+    return {"Daily": daily_return_df, "Monthly": monthly_return_df}
 
 
 # ----------------------------------------------------------------------------
@@ -517,8 +533,7 @@ if __name__ == "__main__":
     # # use made-up series to test daily_return_cal function
     # _test_monthly_return_cal()
     # # use AAPL prc series to test daily_return_cal function
-    ser_price = read_prc_csv(tic='AAPL', start='2020-08-31', end='2021-01-10')
-    _test_monthly_return_cal(made_up_data=False, ser_prc=ser_price)
-    # # test aj_ret_dict function
-    # _test_aj_ret_dict(['AAPL', 'TSLA'], start='2010-06-25', end='2010-08-05')
+    # _test_monthly_return_cal(made_up_data=False, ser_prc=ser_price)
+    # test aj_ret_dict function
+    _test_aj_ret_dict(['AAPL', 'TSLA'], start='2010-06-25', end='2010-08-05')
 
