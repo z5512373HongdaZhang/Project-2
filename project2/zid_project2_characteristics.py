@@ -1,4 +1,4 @@
-""" zid_project2_characteristics.py
+""" zid_project2_characteristics.py Sam
 
 """
 
