@@ -535,5 +535,5 @@ if __name__ == "__main__":
     # # use AAPL prc series to test daily_return_cal function
     # _test_monthly_return_cal(made_up_data=False, ser_prc=ser_price)
     # test aj_ret_dict function
-    _test_aj_ret_dict(['AAPL', 'TSLA'], start='2010-06-25', end='2010-08-05')
+    # _test_aj_ret_dict(['AAPL', 'TSLA'], start='2010-06-25', end='2010-08-05')
 
