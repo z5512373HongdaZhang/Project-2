@@ -170,7 +170,7 @@ def get_avg(df: pd.DataFrame, year):
 
     """
     # <COMPLETE THIS PART>
-
+1
 
 def get_cumulative_ret(df):
     """ Returns cumulative returns for input DataFrame.
