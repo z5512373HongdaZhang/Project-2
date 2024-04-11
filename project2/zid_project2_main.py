@@ -170,6 +170,11 @@ def get_avg(df: pd.DataFrame, year):
 
     """
     # <COMPLETE THIS PART>
+    # 筛选出指定年份的数据
+    df_year = df[df.index.year == year]
+    # 计算平均值
+    df_mean = df_year.mean()
+    return df_mean
 
 
 def get_cumulative_ret(df):
@@ -198,7 +203,9 @@ def get_cumulative_ret(df):
 
     """
     # <COMPLETE THIS PART>
-
+    # 计算累计回报
+    cumulative_ret = (1 + df).prod() - 1
+    return cumulative_ret
 
 # ----------------------------------------------------------------------------
 # Part 8: Answer questions
@@ -245,7 +252,14 @@ def get_cumulative_ret(df):
 #     ticker for this stock.
 #     Use the output dictionary, DM_Ret_dict, and auxiliary function in this script
 #     to do the calculation.
-Q1_ANSWER = '?'
+Q1_ANSWER = 'nvda'
+ret_df = pd.DataFrame(etl.aj_ret_dict(cfg.TICMAP, '2000-12-29', '2021-08-31')["Daily"])
+avg_returns_2008 = get_avg(ret_df, year=2008)
+# 找出平均日收益率最低的股票及其收益率
+min_avg_return = avg_returns_2008.min()
+min_avg_return_stock = avg_returns_2008.idxmin()
+# print(f"2008年平均日收益率最低的股票是 {min_avg_return_stock}，平均收益率为 {min_avg_return:.4f}。")
+
 
 
 # Q2: What is the daily average return of the stock in question 1 for the year 2008.
