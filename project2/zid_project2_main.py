@@ -326,7 +326,14 @@ print(f"'V'股票在2008年与2018年的平均月总波动性比率为: {volatil
 #     Use the output dataframe, Vol_Ret_mrg_df, to do the calculation.
 #     Answer should be an integer
 Q7_ANSWER = '?'
-
+# 获取'tsla'的日收益率数据
+ret_dict_2010 = etl.aj_ret_dict(['tsla'], '2010-01-01', '2010-12-31')
+# 使用cha_main函数得到含有月returns和月平均vol的dataframe
+Vol_Ret_mrg_df = cha.cha_main(ret_dict_2010,'vol',['Daily'])
+# 计算有效行数，即'tsla'和'tsla_vol'两列都没有null值的行数
+# df['tsla'].notnull()和df['tsla_vol'].notnull()分别检查'tsla'和'tsla_vol'列中的值是否为null。&操作符用于组合两个条件，确保两行都是True（即两个列的值都不是null）。df[...]用于选择满足这两个条件的行，shape[0]则返回这些行的数量。
+num_effective_rows = Vol_Ret_mrg_df[(Vol_Ret_mrg_df['tsla'].notnull()) & (Vol_Ret_mrg_df['tsla_vol'].notnull())].shape[0]
+print(f"DataFrame中的有效行数（'tsla'和'tsla_vol'列都没有null值的行数）为: {num_effective_rows}")
 
 # Q8: How many rows and columns in the EW_LS_pf_df data frame?
 #     Answer should be two integer, the first represent number of rows and the two numbers need to be
