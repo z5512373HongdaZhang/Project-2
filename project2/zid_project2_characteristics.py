@@ -307,10 +307,11 @@ def cha_main(ret, cha_name, ret_freq_use: list):
         The function assumes that `vol_input_sanity_check`, `vol_cal`, and `merge_tables` are defined elsewhere
         in the module with appropriate logic to handle the inputs and outputs as described.
     """
+    #sanity check on inputs
     vol_input_sanity_check(ret, cha_name, ret_freq_use)
-
+    #Calculate characteristics (total volatility) with step 5.4
     df_cha = vol_cal(ret, cha_name, ret_freq_use)
-
+    #merge tables
     df_merged = merge_tables(ret, df_cha, cha_name)
 
     return df_merged
