@@ -149,7 +149,7 @@ def vol_cal(ret, cha_name, ret_freq_use: list):
 
     daily_returns = ret[ret_freq_use[0]].copy()
 
-    monthly_volatility = daily_returns.resample('ME').std() * np.sqrt(252)
+    monthly_volatility = daily_returns.resample('ME').std()
 
     monthly_volatility[daily_returns.resample('ME').count() < 18] = None
 
@@ -158,6 +158,8 @@ def vol_cal(ret, cha_name, ret_freq_use: list):
     monthly_volatility.columns = [col + "_" + cha_name for col in monthly_volatility.columns]
 
     monthly_volatility.index = monthly_volatility.index.to_period('M')
+
+    monthly_volatility.index.name = 'Year_Month'
 
     return monthly_volatility
 
@@ -380,7 +382,6 @@ def _test_vol_cal(ret, cha_name,  ret_freq_use):
     msg = "This means `df_cha = vol_cal(ret, cha_name, ret_freq_use)`, print out df_cha:"
     util.test_print(df_cha, msg)
 
-
 def _test_merge_tables(ret, cha_name, ret_freq_use):
     """ Test function for `merge_tables`
     Examples:
@@ -431,9 +432,9 @@ if __name__ == "__main__":
     pass
 
     # use made-up return dictionary, _test_ret_dic_gen, to test functions:
-    #made_up_ret_dict = _test_ret_dict_gen()
-    #_test_vol_input_sanity_check(made_up_ret_dict, 'vol', ['Monthly',])
-    #_test_vol_cal(made_up_ret_dict, 'vol', ['Daily',])
+    made_up_ret_dict = _test_ret_dict_gen()
+    _test_vol_input_sanity_check(made_up_ret_dict, 'vol', ['Monthly',])
+    _test_vol_cal(made_up_ret_dict, 'vol', ['Daily',])
     #_test_merge_tables(made_up_ret_dict, 'vol', ['Daily',])
     #_test_cha_main(made_up_ret_dict, 'vol', ['Daily',])
 
