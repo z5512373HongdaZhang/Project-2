@@ -149,14 +149,16 @@ def vol_cal(ret, cha_name, ret_freq_use: list):
 
     daily_returns = ret[ret_freq_use[0]].copy()
 
+    #计算波动率
     monthly_volatility = daily_returns.resample('ME').std()
 
+    #None if the number of daily returns for the stock in that year-month is less than 18.
     monthly_volatility[daily_returns.resample('ME').count() < 18] = None
-
+    #找到DataFrame类型数据的空值,返回值为None
     monthly_volatility.dropna(how='all', inplace=True)
-
+    #列名加上_vol
     monthly_volatility.columns = [col + "_" + cha_name for col in monthly_volatility.columns]
-
+    #index 变成每月
     monthly_volatility.index = monthly_volatility.index.to_period('M')
 
     monthly_volatility.index.name = 'Year_Month'
@@ -220,7 +222,7 @@ def merge_tables(ret, df_cha, cha_name):
        2010-07     0.015031   0.065355
        2010-08     0.012806   0.033770
        This means `df_m = merge_tables(ret_dic, df_cha, cha_name)
-     hly_returns  The value of `df_m` is
+       The value of `df_m` is
                     aapl      tsla  aapl_vol  tsla_vol
        Date
        2010-06 -0.020827       NaN        NaN        NaN
@@ -246,6 +248,7 @@ def merge_tables(ret, df_cha, cha_name):
     df['Date'] = df.index
     # 设置Date列的格式
     df['Date'] = df['Date'].dt.to_timestamp('s').dt.strftime('%Y-%m')
+    # df.columns = [col + "_" + cha_name for col in df.columns]
 
     #根据Date列合并
     merged_df = pd.merge(monthly_returns, df,on='Date',how="inner")
@@ -253,6 +256,7 @@ def merge_tables(ret, df_cha, cha_name):
     merged_df.set_index(['Date'], inplace=True)
     #将所有cha列向前移动一个月
     merged_df[[col for col in df_cha.columns]] = merged_df[df_cha.columns].shift(1)
+
     return merged_df
 
 
