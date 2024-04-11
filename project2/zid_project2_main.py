@@ -292,7 +292,13 @@ Q4_ANSWER = '?'
 #     Use the output dataframe, Vol_Ret_mrg_df, and auxiliary function in this script
 #     to do the calculation.
 Q5_ANSWER = '?'
-
+# 获取TSLA 2010年的日收益率数据
+ret_dict = etl.aj_ret_dict(['TSLA'], '2010-01-01', '2010-12-31')
+# 使用vol_cal函数计算TSLA每月的波动性
+tsla_vol_df = cha.vol_cal(ret_dict, 'vol', ['Daily'])
+# 计算2010年TSLA的平均月总波动性
+tsla_avg_monthly_volatility = tsla_vol_df['tsla_vol'].mean()
+print(f"TSLA在2010年的平均月总波动性为: {tsla_avg_monthly_volatility:.4f}")
 
 # Q6: What is the ratio of the average monthly total volatility for stock 'V'
 #     in the year 2008 to that in the year 2018? Keep 1 decimal places.
