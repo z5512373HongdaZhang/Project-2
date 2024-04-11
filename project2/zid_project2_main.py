@@ -170,6 +170,12 @@ def get_avg(df: pd.DataFrame, year):
 
     """
     # <COMPLETE THIS PART>
+    # 筛选出指定年份的数据
+    df_year = df[df.index.year == year]
+    # 计算平均值
+    df_mean = df_year.mean()
+    return df_mean
+
 
 def get_cumulative_ret(df):
     """ Returns cumulative returns for input DataFrame.
@@ -197,7 +203,9 @@ def get_cumulative_ret(df):
 
     """
     # <COMPLETE THIS PART>
-
+    # 计算累计回报
+    cumulative_ret = (1 + df).prod() - 1
+    return cumulative_ret
 
 # ----------------------------------------------------------------------------
 # Part 8: Answer questions
