@@ -252,7 +252,13 @@ def get_cumulative_ret(df):
 #     ticker for this stock.
 #     Use the output dictionary, DM_Ret_dict, and auxiliary function in this script
 #     to do the calculation.
-import pandas as pd
+Q1_ANSWER = 'nvda'
+ret_df = pd.DataFrame(etl.aj_ret_dict(cfg.TICMAP, '2000-12-29', '2021-08-31')["Daily"])
+avg_returns_2008 = get_avg(ret_df, year=2008)
+# 找出平均日收益率最低的股票及其收益率
+min_avg_return = avg_returns_2008.min()
+min_avg_return_stock = avg_returns_2008.idxmin()
+# print(f"2008年平均日收益率最低的股票是 {min_avg_return_stock}，平均收益率为 {min_avg_return:.4f}。")
 
 
 
