@@ -258,14 +258,14 @@ avg_returns_2008 = get_avg(ret_df, year=2008)
 # 找出平均日收益率最低的股票及其收益率
 min_avg_return = avg_returns_2008.min()
 min_avg_return_stock = avg_returns_2008.idxmin()
-# print(f"2008年平均日收益率最低的股票是 {min_avg_return_stock}，平均收益率为 {min_avg_return:.4f}。")
+print(f"2008年平均日收益率最低的股票是 {min_avg_return_stock}，平均收益率为 {min_avg_return:.4f}。")
 
 
 
 # Q2: What is the daily average return of the stock in question 1 for the year 2008.
 #     Use the output dictionary, DM_Ret_dict, and auxiliary function in this script
 #     to do the calculation.
-Q2_ANSWER = '?'
+Q2_ANSWER = ''
 
 
 # Q3: Which stock in your sample has the highest average monthly return for the
@@ -274,6 +274,12 @@ Q2_ANSWER = '?'
 #     Use the output dictionary, DM_Ret_dict, and auxiliary function in this script
 #     to do the calculation.
 Q3_ANSWER = '?'
+ret_df_monthly = pd.DataFrame(etl.aj_ret_dict(cfg.TICMAP, '2000-12-29', '2021-08-31')["Monthly"])
+avg_returns_2019 = get_avg(ret_df_monthly, year=2019)
+# 找出平均月收益率最高的股票及其收益率
+max_avg_return = avg_returns_2019.max()
+max_avg_return_stock = avg_returns_2019.idxmax()
+print(f"2019年平均月收益率最高的股票是 {max_avg_return_stock}，平均收益率为 {max_avg_return:.4f}。")
 
 
 # Q4: What is the average monthly return of the stock in question 3 for the year 2019.
