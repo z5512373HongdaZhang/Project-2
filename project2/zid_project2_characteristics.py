@@ -220,7 +220,7 @@ def merge_tables(ret, df_cha, cha_name):
        2010-07     0.015031   0.065355
        2010-08     0.012806   0.033770
        This means `df_m = merge_tables(ret_dic, df_cha, cha_name)
-     hly_returns  The value of `df_m` is
+       The value of `df_m` is
                     aapl      tsla  aapl_vol  tsla_vol
        Date
        2010-06 -0.020827       NaN        NaN        NaN
