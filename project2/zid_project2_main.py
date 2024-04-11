@@ -170,7 +170,13 @@ def get_avg(df: pd.DataFrame, year):
 
     """
     # <COMPLETE THIS PART>
-1
+    # Filter rows for the specified year
+    df_year = df[df.index.year == year]
+
+    # Calculate column-wise average (excluding missing values)
+    avg_values = df_year.mean()
+    return avg_values
+
 
 def get_cumulative_ret(df):
     """ Returns cumulative returns for input DataFrame.
@@ -198,6 +204,10 @@ def get_cumulative_ret(df):
 
     """
     # <COMPLETE THIS PART>
+    cumulative_returns = (1 + df).prod() - 1
+    df = pd.DataFrame(cumulative_returns,columns=['cumulative_returns'])
+
+    return df
 
 
 # ----------------------------------------------------------------------------
@@ -446,7 +456,8 @@ def _test_get_cumulative_ret():
 
 
 if __name__ == "__main__":
-    pass
+    _test_get_avg()
+    _test_get_cumulative_ret()
 
 
 
