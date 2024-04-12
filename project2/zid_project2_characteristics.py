@@ -255,7 +255,6 @@ def merge_tables(ret, df_cha, cha_name):
     merged_df = pd.merge(monthly_returns, df,on='Date',how="inner")
     # 设置Date成为index
     merged_df.set_index(['Date'], inplace=True)
-
     merged_df.index = pd.to_datetime( merged_df.index, format='%Y-%m').to_period('M')
     #将所有cha列向前移动一个月
     merged_df[[col for col in df_cha.columns]] = merged_df[df_cha.columns].shift(1)
