@@ -287,7 +287,7 @@ avg_returns_2008 =pd.Series(avg_returns_2008)
 # 找出平均日收益率最低的股票及其收益率
 min_avg_return = avg_returns_2008.min()
 min_avg_return_stock = avg_returns_2008.idxmin()
-print(f"2008年平均日收益率最低的股票是 {min_avg_return_stock}，平均收益率为 {min_avg_return:.4f}。")
+#print(f"2008年平均日收益率最低的股票是 {min_avg_return_stock}，平均收益率为 {min_avg_return:.4f}。")
 
 
 
@@ -304,7 +304,7 @@ avg_returns_2008 = avg_returns_daily[2008]
 #     ticker for this stock.
 #     Use the output dictionary, DM_Ret_dict, and auxiliary function in this script
 #     to do the calculation.
-Q3_ANSWER = '?'
+Q3_ANSWER = 'aapl'
 
 # 找Monthly字典里2019年的字典
 avg_returns_monthly = DM_Ret_dict['Monthly']
@@ -315,7 +315,7 @@ avg_returns_2019 =pd.Series(avg_returns_2019)
 # 找出平均月收益率最高的股票及其收益率
 max_avg_return = avg_returns_2019.max()
 max_avg_return_stock = avg_returns_2019.idxmax()
-print(f"2019年平均月收益率最高的股票是 {max_avg_return_stock}，平均收益率为 {max_avg_return:.4f}。")
+#print(f"2019年平均月收益率最高的股票是 {max_avg_return_stock}，平均收益率为 {max_avg_return:.4f}。")
 
 
 # Q4: What is the average monthly return of the stock in question 3 for the year 2019.
@@ -336,7 +336,7 @@ ret_dict = etl.aj_ret_dict(['TSLA'], '2010-01-01', '2010-12-31')
 tsla_vol_df = cha.vol_cal(ret_dict, 'vol', ['Daily'])
 # 计算2010年TSLA的平均月总波动性
 tsla_avg_monthly_volatility = tsla_vol_df['tsla_vol'].mean()
-print(f"TSLA在2010年的平均月总波动性为: {tsla_avg_monthly_volatility:.4f}")
+#print(f"TSLA在2010年的平均月总波动性为: {tsla_avg_monthly_volatility:.4f}")
 
 # Q6: What is the ratio of the average monthly total volatility for stock 'V'
 #     in the year 2008 to that in the year 2018? Keep 1 decimal places.
@@ -354,7 +354,7 @@ v_avg_monthly_volatility_2008 = v_vol_df_2008['v_vol'].mean()
 v_avg_monthly_volatility_2018 = v_vol_df_2018['v_vol'].mean()
 # 计算比率，并保留1位小数
 volatility_ratio = round(v_avg_monthly_volatility_2018 / v_avg_monthly_volatility_2008, 1)
-print(f"'V'股票在2008年与2018年的平均月总波动性比率为: {volatility_ratio}")
+#print(f"'V'股票在2008年与2018年的平均月总波动性比率为: {volatility_ratio}")
 
 
 
@@ -376,6 +376,7 @@ print(f"DataFrame中的有效行数（'tsla'和'tsla_vol'列都没有null值的�
 # Q8: How many rows and columns in the EW_LS_pf_df data frame?
 #     Answer should be two integer, the first represent number of rows and the two numbers need to be
 #     separated by a comma.
+
 Q8_ANSWER = '?'
 
 
@@ -384,13 +385,25 @@ Q8_ANSWER = '?'
 #     Use the output dataframe, EW_LS_pf_d, and auxiliary function in this script
 #     to do the calculation.
 Q9_ANSWER = '?'
+ret = etl.aj_ret_dict(cfg.TICMAP, '2019-01-01', '2019-12-31')
+mrg_df = cha.cha_main(ret,'vol',['Daily'])
+res = pf.df_reshape(mrg_df, 'vol')
+sort = pf.stock_sorting(res, 'vol', 5)
+quantile_with_lowest_volatility = sort.groupby('rank')['vol'].mean().idxmin()
+stocks_lowest_volatility_quantile = sort[sort['rank'] == quantile_with_lowest_volatility]
+portfolios_df = pf.pf_cal(sort, cha_name='vol',q=5)
+
+print(portfolios_df)
+#vol = cha.vol_cal(ret, 'vol', ['Daily'])
+#min_quantile_number = vol.idxmin().astype(int)
+#print("Number of the quantile with the lowest total volatility:", min_quantile_number)
 
 
 # Q10: What is the cumulative portfolio return of the total volatility long-short portfolio
 #      over the whole sample period?
 #      Use the output dataframe, EW_LS_pf_d, and auxiliary function in this script
 #     to do the calculation.
-Q10_ANSWER = '?'
+#Q10_ANSWER = '?'
 
 
 # ----------------------------------------------------------------------------
