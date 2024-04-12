@@ -389,13 +389,13 @@ print(f"Number of columns: {columns}")
 #     Use the output dataframe, EW_LS_pf_d, and auxiliary function in this script
 #     to do the calculation.
 Q9_ANSWER = '?'
-# ret = etl.aj_ret_dict(cfg.TICMAP, '2019-01-01', '2019-12-31')
-# mrg_df = cha.cha_main(ret,'vol',['Daily'])
-# res = pf.df_reshape(mrg_df, 'vol')
-# sort = pf.stock_sorting(res, 'vol', 5)
-# quantile_with_lowest_volatility = sort.groupby('rank')['vol'].mean().idxmin()
-# stocks_lowest_volatility_quantile = sort[sort['rank'] == quantile_with_lowest_volatility]
-# portfolios_df = pf.pf_cal(sort, cha_name='vol',q=5)
+ret = etl.aj_ret_dict(cfg.TICMAP, '2019-01-01', '2019-12-31')
+mrg_df = cha.cha_main(ret,'vol',['Daily'])
+res = pf.df_reshape(mrg_df, 'vol')
+sort = pf.stock_sorting(res, 'vol', 3)
+quantile_with_lowest_volatility = sort.groupby('rank')['vol'].mean().idxmin()
+stocks_lowest_volatility_quantile = sort[sort['rank'] == quantile_with_lowest_volatility]
+portfolios_df = pf.pf_cal(sort, cha_name='vol',q=3)
 
 #print(portfolios_df)
 #vol = cha.vol_cal(ret, 'vol', ['Daily'])
