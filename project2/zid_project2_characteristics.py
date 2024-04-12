@@ -159,7 +159,6 @@ def vol_cal(ret, cha_name, ret_freq_use: list):
     #列名加上_vol
     monthly_volatility.columns = [col + "_" + cha_name for col in monthly_volatility.columns]
     #index 变成每月
-
     monthly_volatility.index = monthly_volatility.index.to_period('M')
 
     monthly_volatility.index.name = 'Year_Month'
@@ -251,16 +250,13 @@ def merge_tables(ret, df_cha, cha_name):
     df['Date'] = df['Date'].dt.to_timestamp('s').dt.strftime('%Y-%m')
     # df.columns = [col + "_" + cha_name for col in df.columns]
 
-
     #根据Date列合并
     merged_df = pd.merge(monthly_returns, df,on='Date',how="inner")
     # 设置Date成为index
     merged_df.set_index(['Date'], inplace=True)
-    merged_df.index = pd.to_datetime( merged_df.index, format='%Y-%m').to_period('M')
+    merged_df.index = pd.to_datetime(merged_df.index, format = '%Y-%m').to_period('M')
     #将所有cha列向前移动一个月
     merged_df[[col for col in df_cha.columns]] = merged_df[df_cha.columns].shift(1)
-
-
 
     return merged_df
 
@@ -312,10 +308,11 @@ def cha_main(ret, cha_name, ret_freq_use: list):
         The function assumes that `vol_input_sanity_check`, `vol_cal`, and `merge_tables` are defined elsewhere
         in the module with appropriate logic to handle the inputs and outputs as described.
     """
+    #sanity check on inputs
     vol_input_sanity_check(ret, cha_name, ret_freq_use)
-
+    #Calculate characteristics (total volatility) with step 5.4
     df_cha = vol_cal(ret, cha_name, ret_freq_use)
-
+    #merge tables
     df_merged = merge_tables(ret, df_cha, cha_name)
 
     return df_merged
