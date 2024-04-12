@@ -378,20 +378,24 @@ print(f"DataFrame中的有效行数（'tsla'和'tsla_vol'列都没有null值的�
 #     separated by a comma.
 
 Q8_ANSWER = '?'
-
+main = portfolio_main(cfg.TICMAP, '2000-12-29', '2021-08-31', 'vol', ['Daily'], 3)
+EW_LS_pf_df = main[2]
+rows, columns = EW_LS_pf_df.shape
+print(f"Number of rows: {rows}")
+print(f"Number of columns: {columns}")
 
 # Q9: What is the average equal weighted portfolio return of the quantile with the
 #     lowest total volatility for the year 2019?
 #     Use the output dataframe, EW_LS_pf_d, and auxiliary function in this script
 #     to do the calculation.
 Q9_ANSWER = '?'
-ret = etl.aj_ret_dict(cfg.TICMAP, '2019-01-01', '2019-12-31')
-mrg_df = cha.cha_main(ret,'vol',['Daily'])
-res = pf.df_reshape(mrg_df, 'vol')
-sort = pf.stock_sorting(res, 'vol', 5)
-quantile_with_lowest_volatility = sort.groupby('rank')['vol'].mean().idxmin()
-stocks_lowest_volatility_quantile = sort[sort['rank'] == quantile_with_lowest_volatility]
-portfolios_df = pf.pf_cal(sort, cha_name='vol',q=5)
+# ret = etl.aj_ret_dict(cfg.TICMAP, '2019-01-01', '2019-12-31')
+# mrg_df = cha.cha_main(ret,'vol',['Daily'])
+# res = pf.df_reshape(mrg_df, 'vol')
+# sort = pf.stock_sorting(res, 'vol', 5)
+# quantile_with_lowest_volatility = sort.groupby('rank')['vol'].mean().idxmin()
+# stocks_lowest_volatility_quantile = sort[sort['rank'] == quantile_with_lowest_volatility]
+# portfolios_df = pf.pf_cal(sort, cha_name='vol',q=5)
 
 #print(portfolios_df)
 #vol = cha.vol_cal(ret, 'vol', ['Daily'])
