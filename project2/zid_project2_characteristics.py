@@ -251,6 +251,7 @@ def merge_tables(ret, df_cha, cha_name):
     df['Date'] = df['Date'].dt.to_timestamp('s').dt.strftime('%Y-%m')
     # df.columns = [col + "_" + cha_name for col in df.columns]
 
+
     #根据Date列合并
     merged_df = pd.merge(monthly_returns, df,on='Date',how="inner")
     # 设置Date成为index
