@@ -278,7 +278,6 @@ DM_Ret_dict={}
 DM_Ret_dict['Daily']=Daily_Ret_dict
 DM_Ret_dict['Monthly']=Monthly_Ret_dict
 
-
 # 找Daily字典里2008年的字典
 avg_returns_daily = DM_Ret_dict['Daily']
 avg_returns_2008 = avg_returns_daily[2008]
