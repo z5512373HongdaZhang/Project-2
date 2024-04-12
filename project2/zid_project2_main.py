@@ -23,6 +23,8 @@
 #
 import config as cfg
 import util
+import numpy as np
+import pandas as pd
 
 
 
@@ -254,7 +256,34 @@ def get_cumulative_ret(df):
 #     to do the calculation.
 Q1_ANSWER = 'nvda'
 ret_df = pd.DataFrame(etl.aj_ret_dict(cfg.TICMAP, '2000-12-29', '2021-08-31')["Daily"])
-avg_returns_2008 = get_avg(ret_df, year=2008)
+#创建字典Daily_Ret_dict
+Daily_Ret_dict={}
+for year in range(2000, 2021):
+    get_avg(ret_df, year)
+    #每年的数据都是字典，{year:{'aal':...,'aapl':...}}
+    dict_year_daily=get_avg(ret_df, year).to_dict()
+    Daily_Ret_dict[year] = dict_year_daily
+
+#创建字典Monthly_Ret_dict
+Monthly_Ret_dict={}
+ret_df_monthly = pd.DataFrame(etl.aj_ret_dict(cfg.TICMAP, '2000-12-29', '2021-08-31')["Monthly"])
+for year in range(2000, 2021):
+    get_avg(ret_df_monthly, year)
+    #每年的数据都是字典，{year:{'aal':...,'aapl':...}}
+    dict_year_monthly=get_avg(ret_df_monthly, year).to_dict()
+    Monthly_Ret_dict[year] = dict_year_monthly
+
+#创建字典DM_Ret_dict
+DM_Ret_dict={}
+DM_Ret_dict['Daily']=Daily_Ret_dict
+DM_Ret_dict['Monthly']=Monthly_Ret_dict
+
+# 找Daily字典里2008年的字典
+avg_returns_daily = DM_Ret_dict['Daily']
+avg_returns_2008 = avg_returns_daily[2008]
+#字典变series,方便下面找最小值
+avg_returns_2008 =pd.Series(avg_returns_2008)
+
 # 找出平均日收益率最低的股票及其收益率
 min_avg_return = avg_returns_2008.min()
 min_avg_return_stock = avg_returns_2008.idxmin()
@@ -266,7 +295,9 @@ print(f"2008年平均日收益率最低的股票是 {min_avg_return_stock}，平
 #     Use the output dictionary, DM_Ret_dict, and auxiliary function in this script
 #     to do the calculation.
 Q2_ANSWER = ''
-
+# 找Daily字典里2008年的字典
+avg_returns_daily = DM_Ret_dict['Daily']
+avg_returns_2008 = avg_returns_daily[2008]
 
 # Q3: Which stock in your sample has the highest average monthly return for the
 #     year 2019 (ignoring missing values)? Your answer should include the
@@ -274,8 +305,13 @@ Q2_ANSWER = ''
 #     Use the output dictionary, DM_Ret_dict, and auxiliary function in this script
 #     to do the calculation.
 Q3_ANSWER = '?'
-ret_df_monthly = pd.DataFrame(etl.aj_ret_dict(cfg.TICMAP, '2000-12-29', '2021-08-31')["Monthly"])
-avg_returns_2019 = get_avg(ret_df_monthly, year=2019)
+
+# 找Monthly字典里2019年的字典
+avg_returns_monthly = DM_Ret_dict['Monthly']
+avg_returns_2019 = avg_returns_monthly[2019]
+#字典变series,方便下面找最小值
+avg_returns_2019 =pd.Series(avg_returns_2019)
+
 # 找出平均月收益率最高的股票及其收益率
 max_avg_return = avg_returns_2019.max()
 max_avg_return_stock = avg_returns_2019.idxmax()
@@ -286,7 +322,9 @@ print(f"2019年平均月收益率最高的股票是 {max_avg_return_stock}，平
 #     Use the output dictionary, DM_Ret_dict, and auxiliary function in this script
 #     to do the calculation.
 Q4_ANSWER = '?'
-
+# 找Monthly字典里2019年的字典
+avg_returns_monthly = DM_Ret_dict['Monthly']
+avg_returns_2019 = avg_returns_monthly[2019]
 
 # Q5: What is the average monthly total volatility for stock 'TSLA' in the year 2010?
 #     Use the output dataframe, Vol_Ret_mrg_df, and auxiliary function in this script
@@ -383,7 +421,6 @@ n_obs = '?'
 
 
 # <ADD THE t_stat FUNCTION HERE>
-
 
 # ----------------------------------------------------------------------------
 # Part 10: share your team's project 2 git log
