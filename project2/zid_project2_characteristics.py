@@ -260,7 +260,6 @@ def merge_tables(ret, df_cha, cha_name):
 
     return merged_df
 
-
 # ------------------------------------------------------------------------------------
 # Part 5.2: Read the cha_main function and understand the workflow in this script
 # ------------------------------------------------------------------------------------
