@@ -393,7 +393,7 @@ quantile_with_lowest_volatility = sort.groupby('rank')['vol'].mean().idxmin()
 stocks_lowest_volatility_quantile = sort[sort['rank'] == quantile_with_lowest_volatility]
 portfolios_df = pf.pf_cal(sort, cha_name='vol',q=5)
 
-print(portfolios_df)
+#print(portfolios_df)
 #vol = cha.vol_cal(ret, 'vol', ['Daily'])
 #min_quantile_number = vol.idxmin().astype(int)
 #print("Number of the quantile with the lowest total volatility:", min_quantile_number)
