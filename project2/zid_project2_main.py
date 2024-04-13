@@ -378,7 +378,11 @@ print(f"DataFrame中的有效行数（'tsla'和'tsla_vol'列都没有null值的�
 #     separated by a comma.
 
 Q8_ANSWER = '?'
-
+main = portfolio_main(cfg.TICMAP, '2000-12-29', '2021-08-31', 'vol', ['Daily'], 3)
+EW_LS_pf_df = main[2]
+rows, columns = EW_LS_pf_df.shape
+print(f"Number of rows: {rows}")
+print(f"Number of columns: {columns}")
 
 # Q9: What is the average equal weighted portfolio return of the quantile with the
 #     lowest total volatility for the year 2019?
@@ -388,10 +392,10 @@ Q9_ANSWER = '?'
 ret = etl.aj_ret_dict(cfg.TICMAP, '2019-01-01', '2019-12-31')
 mrg_df = cha.cha_main(ret,'vol',['Daily'])
 res = pf.df_reshape(mrg_df, 'vol')
-sort = pf.stock_sorting(res, 'vol', 5)
+sort = pf.stock_sorting(res, 'vol', 3)
 quantile_with_lowest_volatility = sort.groupby('rank')['vol'].mean().idxmin()
 stocks_lowest_volatility_quantile = sort[sort['rank'] == quantile_with_lowest_volatility]
-portfolios_df = pf.pf_cal(sort, cha_name='vol',q=5)
+portfolios_df = pf.pf_cal(sort, cha_name='vol',q=3)
 
 #print(portfolios_df)
 #vol = cha.vol_cal(ret, 'vol', ['Daily'])
@@ -441,7 +445,50 @@ n_obs = '?'
 
 
 # <ADD THE t_stat FUNCTION HERE>
+def t_stat(portfolio_df):
+    """
+    Calculate the t-statistic for the long-short portfolio volatility.
 
+    Args:
+        portfolio_df (pd.DataFrame): DataFrame containing the long-short portfolio data.
+
+    Returns:
+        pd.DataFrame: A DataFrame with three columns:
+            - 'ls_bar': Mean of the 'ls' column
+            - 'ls_t': T-statistic for the 'ls' column
+            - 'n_obs': Number of observations in the 'ls' column
+    """
+    # 提取 "ls "列
+    ls_volatility = portfolio_df['ls']
+
+    # Compute the mean and standard deviation of the 'ls' column
+    ls_mean = np.mean(ls_volatility)
+    ls_std = np.std(ls_volatility,ddof=1)  #计算样本标准差
+
+    # Calculate the t-statistic
+    n = len(ls_volatility)
+    t_statistic = ls_mean / (ls_std / np.sqrt(n))
+    #保留4位数
+    ls_mean_rounded = round(ls_mean, 4)
+    t_statistic_rounded = round(t_statistic, 4)
+
+    t_stat_df = pd.DataFrame({
+        'ls_bar': [ls_mean_rounded],
+        'ls_t': [t_statistic_rounded],
+        'n_obs': [n]
+    })
+
+    return t_stat_df
+
+# Example usage:
+if __name__ == "__main__":
+    # Load your EW_LS_pf_df data (assuming it's already available)
+    # Replace the following line with your actual data loading code
+    portfolio_data = EW_LS_pf_df
+
+    # Calculate the t-statistic
+    t_stat_result = t_stat(portfolio_data)
+    print(t_stat_result)
 # ----------------------------------------------------------------------------
 # Part 10: share your team's project 2 git log
 # ----------------------------------------------------------------------------
