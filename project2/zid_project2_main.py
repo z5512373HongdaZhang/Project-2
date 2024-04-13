@@ -403,7 +403,14 @@ portfolios_df = pf.pf_cal(sort, cha_name='vol',q=5)
 #      over the whole sample period?
 #      Use the output dataframe, EW_LS_pf_d, and auxiliary function in this script
 #     to do the calculation.
-#Q10_ANSWER = '?'
+Q10_ANSWER = '?'
+# 计算整个样本期间多空组合的累积回报
+cumulative_return_ls = get_cumulative_ret(EW_LS_pf_df['ls'])
+print(f"整个样本期间总波动性多空投资组合的累积回报为: {cumulative_return_ls:.4f}")
+
+
+
+
 
 
 # ----------------------------------------------------------------------------
