@@ -402,12 +402,15 @@ average_return = EW_LS_pf_d[lowest_volatility_quantile].mean()
 print(f"The average return is {average_return}")
 
 
+
 # Q10: What is the cumulative portfolio return of the total volatility long-short portfolio
 #      over the whole sample period?
 #      Use the output dataframe, EW_LS_pf_d, and auxiliary function in this script
 #     to do the calculation.
-#Q10_ANSWER = '?'
-
+Q10_ANSWER = '1.5980'
+# 计算整个样本期间多空组合的累积回报
+cumulative_return_ls = get_cumulative_ret(EW_LS_pf_df['ls'])
+print(f"整个样本期间总波动性多空投资组合的累积回报为: {cumulative_return_ls:.4f}")
 
 # ----------------------------------------------------------------------------
 # Part 9: Add t_stat function
