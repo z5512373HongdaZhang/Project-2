@@ -444,6 +444,8 @@ def t_stat(portfolio_df):
 if __name__ == "__main__":
     # Load your EW_LS_pf_df data (assuming it's already available)
     # Replace the following line with your actual data loading code
+    main = portfolio_main(cfg.TICMAP, '2000-12-29', '2021-08-31', 'vol', ['Daily'], 3)
+    EW_LS_pf_df = main[2]
     portfolio_data = EW_LS_pf_df
 
     # Calculate the t-statistic
