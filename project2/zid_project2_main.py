@@ -389,18 +389,17 @@ print(f"Number of columns: {columns}")
 #     Use the output dataframe, EW_LS_pf_d, and auxiliary function in this script
 #     to do the calculation.
 Q9_ANSWER = '?'
-ret = etl.aj_ret_dict(cfg.TICMAP, '2019-01-01', '2019-12-31')
-mrg_df = cha.cha_main(ret,'vol',['Daily'])
-res = pf.df_reshape(mrg_df, 'vol')
-sort = pf.stock_sorting(res, 'vol', 3)
-quantile_with_lowest_volatility = sort.groupby('rank')['vol'].mean().idxmin()
-stocks_lowest_volatility_quantile = sort[sort['rank'] == quantile_with_lowest_volatility]
-portfolios_df = pf.pf_cal(sort, cha_name='vol',q=3)
+main = portfolio_main(cfg.TICMAP, '2019-01-01', '2019-12-31', 'vol', ['Daily'], 3)
+EW_LS_pf_d = main[2]
+print(EW_LS_pf_d)
+# Calculate the volatility (standard deviation) for each return column
+volatility = EW_LS_pf_d[['ewp_rank_1', 'ewp_rank_2', 'ewp_rank_3']].std()
+# Sort the volatility in ascending order to find the lowest one
+lowest_volatility_quantile = volatility.sort_values().index[0]
 
-#print(portfolios_df)
-#vol = cha.vol_cal(ret, 'vol', ['Daily'])
-#min_quantile_number = vol.idxmin().astype(int)
-#print("Number of the quantile with the lowest total volatility:", min_quantile_number)
+# Calculate the average equal-weighted portfolio return for the lowest volatility quantile
+average_return = EW_LS_pf_d[lowest_volatility_quantile].mean()
+print(f"The average return is {average_return}")
 
 
 # Q10: What is the cumulative portfolio return of the total volatility long-short portfolio
