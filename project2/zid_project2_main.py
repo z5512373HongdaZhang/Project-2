@@ -24,7 +24,7 @@
 import config as cfg
 import util
 import numpy as np
-import pandas as pd
+
 
 
 
@@ -171,10 +171,8 @@ def get_avg(df: pd.DataFrame, year):
         dtype: float64
 
     """
-    # <COMPLETE THIS PART>
-    # 筛选出指定年份的数据
+
     df_year = df[df.index.year == year]
-    # 计算平均值
     df_mean = df_year.mean()
     return df_mean
 
@@ -204,8 +202,7 @@ def get_cumulative_ret(df):
         where r1, ..., rN represents monthly returns
 
     """
-    # <COMPLETE THIS PART>
-    # 计算累计回报
+
     cumulative_ret = (1 + df).prod() - 1
     return cumulative_ret
 
@@ -296,14 +293,7 @@ Q6_ANSWER = '0.4'
 #     Use the output dataframe, Vol_Ret_mrg_df, to do the calculation.
 #     Answer should be an integer
 Q7_ANSWER = '5'
-# 获取'tsla'的日收益率数据
-# ret_dict_2010 = etl.aj_ret_dict(['tsla'], '2010-01-01', '2010-12-31')
-# # 使用cha_main函数得到含有月returns和月平均vol的dataframe
-# Vol_Ret_mrg_df = cha.cha_main(ret_dict_2010,'vol',['Daily'])
-# # 计算有效行数，即'tsla'和'tsla_vol'两列都没有null值的行数
-# # df['tsla'].notnull()和df['tsla_vol'].notnull()分别检查'tsla'和'tsla_vol'列中的值是否为null。&操作符用于组合两个条件，确保两行都是True（即两个列的值都不是null）。df[...]用于选择满足这两个条件的行，shape[0]则返回这些行的数量。
-# num_effective_rows = Vol_Ret_mrg_df[(Vol_Ret_mrg_df['tsla'].notnull()) & (Vol_Ret_mrg_df['tsla_vol'].notnull())].shape[0]
-# print(f"DataFrame中的有效行数（'tsla'和'tsla_vol'列都没有null值的行数）为: {num_effective_rows}")
+
 
 # Q8: How many rows and columns in the EW_LS_pf_df data frame?
 #     Answer should be two integer, the first represent number of rows and the two numbers need to be
@@ -311,27 +301,12 @@ Q7_ANSWER = '5'
 
 Q8_ANSWER = '235,4'
 
-# main = portfolio_main(cfg.TICMAP, '2000-12-29', '2021-08-31', 'vol', ['Daily'], 3)
-# EW_LS_pf_df = main[2]
-# rows, columns = EW_LS_pf_df.shape
-# print(f"Number of rows: {rows}")
-# print(f"Number of columns: {columns}")
 
 # Q9: What is the average equal weighted portfolio return of the quantile with the
 #     lowest total volatility for the year 2019?
 #     Use the output dataframe, EW_LS_pf_d, and auxiliary function in this script
 #     to do the calculation.
 Q9_ANSWER = '0.0182'
-# main = portfolio_main(cfg.TICMAP, '2019-01-01', '2019-12-31', 'vol', ['Daily'], 3)
-# EW_LS_pf_d = main[2]
-# # Calculate the volatility (standard deviation) for each return column
-# volatility = EW_LS_pf_d[['ewp_rank_1', 'ewp_rank_2', 'ewp_rank_3']].std()
-# # Sort the volatility in ascending order to find the lowest one
-# lowest_volatility_quantile = volatility.sort_values().index[0]
-
-# Calculate the average equal-weighted portfolio return for the lowest volatility quantile
-# average_return = EW_LS_pf_d[lowest_volatility_quantile].mean()
-# print(f"The average return is {average_return:.4f}")
 
 
 # Q10: What is the cumulative portfolio return of the total volatility long-short portfolio
@@ -381,17 +356,13 @@ def t_stat(portfolio_df):
             - 'ls_t': T-statistic for the 'ls' column
             - 'n_obs': Number of observations in the 'ls' column
     """
-    # 提取 "ls "列
     ls_volatility = portfolio_df['ls']
 
-    # Compute the mean and standard deviation of the 'ls' column
     ls_mean = np.mean(ls_volatility)
-    ls_std = np.std(ls_volatility,ddof=1)  #计算样本标准差
+    ls_std = np.std(ls_volatility,ddof=1)
 
-    # Calculate the t-statistic
     n = len(ls_volatility)
     t_statistic = ls_mean / (ls_std / np.sqrt(n))
-    #保留4位数
     ls_mean_rounded = round(ls_mean, 4)
     t_statistic_rounded = round(t_statistic, 4)
 

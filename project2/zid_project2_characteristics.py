@@ -149,16 +149,11 @@ def vol_cal(ret, cha_name, ret_freq_use: list):
 
     daily_returns = ret[ret_freq_use[0]].copy()
 
-    #计算波动率
     monthly_volatility = daily_returns.resample('ME').std()
 
-    #None if the number of daily returns for the stock in that year-month is less than 18.
     monthly_volatility[daily_returns.resample('ME').count() < 18] = None
-    #找到DataFrame类型数据的空值,返回值为None
     monthly_volatility.dropna(how='all', inplace=True)
-    #列名加上_vol
     monthly_volatility.columns = [col + "_" + cha_name for col in monthly_volatility.columns]
-    #index 变成每月
     monthly_volatility.index = monthly_volatility.index.to_period('M')
 
     monthly_volatility.index.name = 'Year_Month'
@@ -237,24 +232,16 @@ def merge_tables(ret, df_cha, cha_name):
      - Read shift() documentations to understand how to shift the values of a DataFrame along a specified axis
     """
     monthly_returns = ret['Monthly'].copy()
-    # 增加一列日期
     monthly_returns['Date'] = monthly_returns.index
-    # 设置Date列的格式
     monthly_returns['Date'] = monthly_returns['Date'].dt.strftime('%Y-%m')
 
     df = df_cha.copy()
-    # 增加一列日期
     df['Date'] = df.index
-    # 设置Date列的格式
     df['Date'] = df['Date'].dt.strftime('%Y-%m')
 
-    #根据Date列合并
     merged_df = pd.merge(monthly_returns, df,on='Date',how="inner")
-    # 设置Date成为index
     merged_df.set_index(['Date'], inplace=True)
-    #将所有cha列向前移动一个月
     merged_df[[col for col in df_cha.columns]] = merged_df[df_cha.columns].shift(1)
-    #设置index的频数为每月
     merged_df.index = pd.to_datetime(merged_df.index).to_period('M')
 
     return merged_df
@@ -306,11 +293,8 @@ def cha_main(ret, cha_name, ret_freq_use: list):
         The function assumes that `vol_input_sanity_check`, `vol_cal`, and `merge_tables` are defined elsewhere
         in the module with appropriate logic to handle the inputs and outputs as described.
     """
-    #sanity check on inputs
     vol_input_sanity_check(ret, cha_name, ret_freq_use)
-    #Calculate characteristics (total volatility) with step 5.4
     df_cha = vol_cal(ret, cha_name, ret_freq_use)
-    #merge tables
     df_merged = merge_tables(ret, df_cha, cha_name)
 
     return df_merged
