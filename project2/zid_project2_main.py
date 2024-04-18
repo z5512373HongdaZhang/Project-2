@@ -256,15 +256,6 @@ def get_cumulative_ret(df):
 #     to do the calculation.
 Q1_ANSWER = 'nvda'
 
-# main = portfolio_main(cfg.TICMAP, '2000-12-29', '2021-08-31', 'vol', ['Daily'], 3)
-# DM_Ret_dict = main[0]
-# avg_returns_daily = DM_Ret_dict['Daily']
-#
-# avg_returns_2008 = get_avg(avg_returns_daily,year=2008)
-# # 找出平均日收益率最低的股票及其收益率
-# min_avg_return = avg_returns_2008.min()
-# min_avg_return_stock = avg_returns_2008.idxmin()
-# print(f"2008年平均日收益率最低的股票是 {min_avg_return_stock}，平均收益率为 {min_avg_return:.4f}。")
 
 # Q2: What is the daily average return of the stock in question 1 for the year 2008.
 #     Use the output dictionary, DM_Ret_dict, and auxiliary function in this script
@@ -279,13 +270,6 @@ Q2_ANSWER = '-0.0042'
 #     to do the calculation.
 Q3_ANSWER = 'aapl'
 
-# avg_returns_monthly = DM_Ret_dict['Monthly']
-# avg_returns_2019 = get_avg(avg_returns_monthly,year=2019)
-# # 找出平均月收益率最高的股票及其收益率
-# max_avg_return = avg_returns_2019.max()
-# max_avg_return_stock = avg_returns_2019.idxmax()
-# print(f"2019年平均月收益率最高的股票是 {max_avg_return_stock}，平均收益率为 {max_avg_return:.4f}。")
-
 
 # Q4: What is the average monthly return of the stock in question 3 for the year 2019.
 #     Use the output dictionary, DM_Ret_dict, and auxiliary function in this script
@@ -297,32 +281,13 @@ Q4_ANSWER = '0.0566'
 #     Use the output dataframe, Vol_Ret_mrg_df, and auxiliary function in this script
 #     to do the calculation.
 Q5_ANSWER = '0.0426'
-# # 获取TSLA 2010年的日收益率数据
-# ret_dict = etl.aj_ret_dict(['TSLA'], '2010-01-01', '2010-12-31')
-# # 使用vol_cal函数计算TSLA每月的波动性
-# tsla_vol_df = cha.vol_cal(ret_dict, 'vol', ['Daily'])
-# # 计算2010年TSLA的平均月总波动性
-# tsla_avg_monthly_volatility = tsla_vol_df['tsla_vol'].mean()
-# print(f"TSLA在2010年的平均月总波动性为: {tsla_avg_monthly_volatility:.4f}")
+
 
 # Q6: What is the ratio of the average monthly total volatility for stock 'V'
 #     in the year 2008 to that in the year 2018? Keep 1 decimal places.
 #     Use the output dataframe, Vol_Ret_mrg_df, and auxiliary function in this script
 #     to do the calculation.
 Q6_ANSWER = '0.4'
-# # 获取'V'的日收益率数据
-# ret_dict_2008 = etl.aj_ret_dict(['V'], '2008-01-01', '2008-12-31')
-# ret_dict_2018 = etl.aj_ret_dict(['V'], '2018-01-01', '2018-12-31')
-# # 使用vol_cal函数计算'V'在2008年和2018年每月的波动性
-# v_vol_df_2008 = cha.vol_cal(ret_dict_2008, 'vol', ['Daily'])
-# v_vol_df_2018 = cha.vol_cal(ret_dict_2018, 'vol', ['Daily'])
-# # 计算2008年和2018年的平均月总波动性
-# v_avg_monthly_volatility_2008 = v_vol_df_2008['v_vol'].mean()
-# v_avg_monthly_volatility_2018 = v_vol_df_2018['v_vol'].mean()
-# # 计算比率，并保留1位小数
-# volatility_ratio = round(v_avg_monthly_volatility_2018 / v_avg_monthly_volatility_2008, 1)
-# print(f"'V'股票在2008年与2018年的平均月总波动性比率为: {volatility_ratio}")
-
 
 
 # Q7: How many effective year-month for stock 'TSLA' in year 2010. An effective year-month
@@ -374,9 +339,6 @@ Q9_ANSWER = '0.0182'
 #      Use the output dataframe, EW_LS_pf_d, and auxiliary function in this script
 #     to do the calculation.
 Q10_ANSWER = '1.5980'
-# 计算整个样本期间多空组合的累积回报
-# cumulative_return_ls = get_cumulative_ret(EW_LS_pf_df['ls'])
-# print(f"整个样本期间总波动性多空投资组合的累积回报为: {cumulative_return_ls:.4f}")
 
 # ----------------------------------------------------------------------------
 # Part 9: Add t_stat function
