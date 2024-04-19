@@ -429,7 +429,7 @@ git_log = """?"""
 # Please use Zoom to record it. The final submission should be a zoom recording link.
 
 # Please replace the '?' with your team's presentation video zoom link:
-Presentation_zoom_link = 'https://drive.google.com/file/d/1w6uRyUU1YpauvqBbE0Oc8pUUWAZWrY8L/view?usp=drive_link'
+Presentation_zoom_link = 'https://drive.google.com/file/d/1m6E6Jy9IMuL_n3sjjTDiKqJz24iemnHN/view?usp=sharing'
 Password_of_your_video = 'NO PASSWORD'
 
 
